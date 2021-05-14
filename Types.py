@@ -9,11 +9,11 @@ class Iris_Data_Sample:
 
 
 @dataclass
-class IFC_Summary:
+class Summary:
     noOfSamples: float
     noOfFeatures: float
     mean: Sequence[float]
     stddev: Sequence[float]
 
 
-IFC_Summary_By_Class = Dict[str, IFC_Summary]
+Summary_By_Class = Dict[str, Summary]
