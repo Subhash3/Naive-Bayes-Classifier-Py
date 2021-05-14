@@ -1,15 +1,19 @@
-export interface IFC_Iris_Data_Sample {
-    features: number[],
-    category: string
-}
+from typing import Sequence, Dict
+from dataclasses import dataclass
 
-export interface IFC_Summary {
-    noOfSamples: number,
-    noOfFeatures: number,
-    mean: number[],
-    stddev: number[]
-}
 
-export interface IFC_Summary_By_Class {
-    [category: string]: IFC_Summary
-}
+@dataclass
+class Iris_Data_Sample:
+    features: Sequence[float]
+    category: str
+
+
+@dataclass
+class IFC_Summary:
+    noOfSamples: float
+    noOfFeatures: float
+    mean: Sequence[float]
+    stddev: Sequence[float]
+
+
+IFC_Summary_By_Class = Dict[str, IFC_Summary]
