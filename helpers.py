@@ -44,7 +44,7 @@ def convertArrayToDatasamples(data: List[List[str]]):
     noOfSamples = 0
     noOfFeatures = 0
 
-    noOfSamples = data.length
+    noOfSamples = len(data)
     noOfFeatures = len(data[0]) - 1 if (noOfSamples > 0) else 0
     dataset: List[Iris_Data_Sample] = []
 
@@ -56,7 +56,7 @@ def convertArrayToDatasamples(data: List[List[str]]):
             category
         )
 
-        dataset.push(dataSample)
+        dataset.append(dataSample)
 
     return [
         noOfFeatures,

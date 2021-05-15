@@ -108,6 +108,10 @@ class NaiveBayesClassifier:
     def train(self):
         self.summaryByClass = NaiveBayesClassifier.describeByClass(
             self.dataset)
+        # print(self.summaryByClass)
+        # for category in self.summaryByClass:
+        #     summary = self.summaryByClass[category]
+        #     print(f"{category}:  {summary}")
 
     def computeClassProbabilities(self, newSample: Iris_Data_Sample):
 
@@ -143,3 +147,15 @@ class NaiveBayesClassifier:
         probabilities = self.computeClassProbabilities(newSample)
 
         return helpers.customArgmax(probabilities), probabilities
+
+    def _computeLoss(self, dataset: Iris_Dataset) -> float:
+        noOfSamples = len(dataset)
+        incorrect = 0
+        for sample in dataset:
+            prediction = self.predict(sample)
+            if prediction[0] != sample.category:
+                incorrect += 1
+        return incorrect * 100 / noOfSamples
+
+    def computeLoss(self):
+        return self._computeLoss(self.dataset)
