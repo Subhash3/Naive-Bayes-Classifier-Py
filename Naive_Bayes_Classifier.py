@@ -22,12 +22,7 @@ class NaiveBayesClassifier:
         try:
             with open(filename) as fp:
                 dataset = json.load(fp)
-                for sample in dataset:
-                    dataSample = Iris_Data_Sample(
-                        sample["features"],
-                        sample["category"]
-                    )
-                    self.dataset.append(dataSample)
+                self.dataset = helpers.convertJsonDatasetToIrisDataset(dataset)
 
         except Exception as e:
             raise e
@@ -102,11 +97,13 @@ class NaiveBayesClassifier:
         separatedByClass = NaiveBayesClassifier.separateByClass(dataset)
         summaryByClass: Summary_By_Class = dict()
 
-        for category in summaryByClass:
+        for category in separatedByClass:
             samples = separatedByClass[category]
             summaryOfThisCategory = NaiveBayesClassifier.describeData(samples)
 
             summaryByClass[category] = summaryOfThisCategory
+
+        return summaryByClass
 
     def train(self):
         self.summaryByClass = NaiveBayesClassifier.describeByClass(
@@ -142,7 +139,7 @@ class NaiveBayesClassifier:
 
         return probabilities
 
-    def predict(self, newSample):
+    def predict(self, newSample: Iris_Data_Sample):
         probabilities = self.computeClassProbabilities(newSample)
 
         return helpers.customArgmax(probabilities), probabilities

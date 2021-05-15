@@ -19,7 +19,7 @@ class Summary:
     stddev: List[float]
 
     def __repr__(self):
-        return f"""noOfSamples: {self.noOfSamples}\noOfFeatures: {self.noOfFeatures}\nmean: {self.mean}\nstddev: {self.stddev}\n"""
+        return f"""noOfSamples: {self.noOfSamples}, noOfFeatures: {self.noOfFeatures}, mean: {self.mean}, stddev: {self.stddev}"""
 
 
 Iris_Dataset = List[Iris_Data_Sample]

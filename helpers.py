@@ -1,4 +1,4 @@
-from Types import Iris_Data_Sample
+from Types import Iris_Data_Sample, Iris_Dataset
 from math import sqrt, exp, floor, pow, pi
 import random
 from typing import Dict, List
@@ -63,3 +63,21 @@ def convertArrayToDatasamples(data: List[List[str]]):
         noOfSamples,
         dataset
     ]
+
+
+def convertJsonObjectToIrisSample(sample: dict):
+    dataSample = Iris_Data_Sample(
+        sample["features"],
+        sample["category"]
+    )
+
+    return dataSample
+
+
+def convertJsonDatasetToIrisDataset(jsonDataset: List[dict]):
+    dataset: Iris_Dataset = []
+    for sample in jsonDataset:
+        dataSample = convertJsonObjectToIrisSample(sample)
+        dataset.append(dataSample)
+
+    return dataset
