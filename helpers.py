@@ -1,79 +1,65 @@
-import { IFC_Iris_Data_Sample } from './Types'
+from Types import Iris_Data_Sample
+from math import sqrt, exp, floor, pow, PI
+import random
+from typing import Dict, Sequence
 
-const { sqrt, PI, exp, pow, floor, random } = Math
 
-export const gaussianPdf = (x: number, mean: number, stddev: number) => {
+def gaussianPdf(x: float, mean: float, stddev: float):
     return (1 / (stddev * (sqrt(2 * PI)))) * (exp((-1 / 2) * pow(((x - mean) / (stddev)), 2)))
-}
 
-export const customArgmax = (data: { [key: string]: number }) => {
-    let maxKey: string | null = null
 
-    let maxValue: number | null = null
-    Object.keys(data).forEach(key => {
-        if (maxKey == null) maxKey = key
+def customArgmax(data: Dict[str, float]):
+    maxKey = None
+    maxValue = None
 
-        if (maxValue == null || maxValue < data[key]) {
+    for key in data:
+        if maxKey == None:
+            maxKey = key
+        if maxValue == None or maxValue < data[key]:
             maxValue = data[key]
             maxKey = key
-        }
-    })
 
     return maxKey
-}
 
-export const shuffleArray = (array: any[]) => {
-    var currentIndex = array.length, temporaryValue, randomIndex;
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
+def shuffleArray(array: list):
+    arrayCopy = array.copy()
+    random.shuffle(arrayCopy)
 
-        // Pick a remaining element...
-        randomIndex = floor(random() * currentIndex);
-        currentIndex -= 1;
+    return arrayCopy
 
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
 
-    return array;
-}
+def splitArr(array: list, ratio: float):
+    n = len(array)
 
-export const splitArr = (array: any[], ratio: number) => {
-    let n = array.length
+    m = floor(n * ratio)
 
-    let m = floor(n * ratio)
-
-    let firstPart: any[] = array.slice(0, m)
-    let secondPart: any[] = array.slice(m, n)
+    firstPart: list = array[0: m]
+    secondPart: list = array[m: n]
 
     return [firstPart, secondPart]
-}
 
-export const convertArrayToDatasamples = (data: (string[])[]) => {
-    let noOfSamples = 0
-    let noOfFeatures = 0
+
+def convertArrayToDatasamples(data: Sequence[Sequence[str]]):
+    noOfSamples = 0
+    noOfFeatures = 0
 
     noOfSamples = data.length
-    noOfFeatures = (noOfSamples > 0) ? data[0].length - 1 : 0
-    let dataset: IFC_Iris_Data_Sample[] = []
+    noOfFeatures = len(data[0]) - 1 if (noOfSamples > 0) else 0
+    dataset: Sequence[Iris_Data_Sample] = []
 
-    for (let row of data) {
-        let features: number[] = row.slice(0, noOfFeatures).map(num => parseFloat(num))
-        let category: string = row[noOfFeatures]
-        let dataSample: IFC_Iris_Data_Sample = {
+    for row in data:
+        features: Sequence[float] = list(map(float, row[:noOfFeatures]))
+        category: str = row[noOfFeatures]
+        dataSample: Iris_Data_Sample = Iris_Data_Sample(
             features,
             category
-        }
+        )
 
         dataset.push(dataSample)
-    }
 
-    return {
+    return [
         noOfFeatures,
         noOfSamples,
         dataset
-    }
-}
+    ]
