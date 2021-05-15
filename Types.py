@@ -1,11 +1,14 @@
-from typing import Sequence, Dict, List
+from typing import Dict, List
 from dataclasses import dataclass
 
 
 @dataclass
 class Iris_Data_Sample:
-    features: Sequence[float]
+    features: List[float]
     category: str
+
+    def __repr__(self):
+        return f"features: {self.features}, category: {self.category}"
 
 
 @dataclass
@@ -14,6 +17,9 @@ class Summary:
     noOfFeatures: float
     mean: List[float]
     stddev: List[float]
+
+    def __repr__(self):
+        return f"""noOfSamples: {self.noOfSamples}\noOfFeatures: {self.noOfFeatures}\nmean: {self.mean}\nstddev: {self.stddev}\n"""
 
 
 Iris_Dataset = List[Iris_Data_Sample]

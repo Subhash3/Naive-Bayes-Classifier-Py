@@ -21,7 +21,14 @@ class NaiveBayesClassifier:
         # Loads the dataset from a json file of data samples
         try:
             with open(filename) as fp:
-                self.dataset = json.load(fp)
+                dataset = json.load(fp)
+                for sample in dataset:
+                    dataSample = Iris_Data_Sample(
+                        sample["features"],
+                        sample["category"]
+                    )
+                    self.dataset.append(dataSample)
+
         except Exception as e:
             raise e
         self._parseSimpleMetadata()
